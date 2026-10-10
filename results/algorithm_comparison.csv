@@ -1,0 +1,4 @@
+algorithm,precision,recall,f1_score,detected_anomalies,runtime_ms
+Isolation Forest,1.0,1.0,1.0,20,154.73179100081325
+Local Outlier Factor,0.0,0.0,0.0,20,4.3703330447897315
+One-Class SVM,0.5263157894736842,0.5,0.5128205128205128,19,3.3424580469727516

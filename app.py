@@ -4,6 +4,7 @@ import streamlit as st
 
 from anomalywatch.detector import detect_anomalies
 
+from pathlib import Path
 
 st.set_page_config(
     page_title="AnomalyWatch",
@@ -13,6 +14,10 @@ st.set_page_config(
 
 st.title("AnomalyWatch")
 st.caption("Interactive anomaly detection using Isolation Forest")
+st.caption(
+    "Compare Isolation Forest, Local Outlier Factor, "
+    "and One-Class SVM on numerical datasets."
+)
 
 uploaded_file = st.file_uploader(
     "Upload a CSV dataset",
@@ -53,6 +58,15 @@ features = st.sidebar.multiselect(
     default=numeric_columns[: min(3, len(numeric_columns))],
 )
 
+algorithm = st.sidebar.selectbox(
+    "Detection algorithm",
+    [
+        "Isolation Forest",
+        "Local Outlier Factor",
+        "One-Class SVM",
+    ],
+)
+
 contamination = st.sidebar.slider(
     "Expected anomaly proportion",
     min_value=0.01,
@@ -82,7 +96,9 @@ try:
         df,
         features=features,
         contamination=contamination,
+        algorithm=algorithm,
     )
+
 except ValueError as exc:
     st.error(str(exc))
     st.stop()
@@ -114,18 +130,19 @@ fig = px.scatter(
 )
 
 fig.update_traces(marker={"size": 7})
-st.plotly_chart(fig, use_container_width=True)
+
+st.plotly_chart(fig, width="stretch")
 
 st.subheader("Most anomalous observations")
 
 st.dataframe(
     result.sort_values("anomaly_score", ascending=False).head(20),
-    use_container_width=True,
+    width="stretch",
 )
 
 st.subheader("Dataset with predictions")
 
-st.dataframe(result, use_container_width=True)
+st.dataframe(result, width="stretch")
 
 st.download_button(
     label="Download results as CSV",
@@ -133,3 +150,35 @@ st.download_button(
     file_name="anomalywatch_results.csv",
     mime="text/csv",
 )
+
+benchmark_file = Path(
+    "results/benchmarks/benchmark_results.csv"
+)
+
+with st.expander("View algorithm benchmark results"):
+    if benchmark_file.exists():
+        benchmark_results = pd.read_csv(benchmark_file)
+
+        st.dataframe(
+            benchmark_results,
+            width="stretch",
+        )
+
+        figure = px.bar(
+            benchmark_results,
+            x="dataset",
+            y="f1_score",
+            color="algorithm",
+            barmode="group",
+            title="Algorithm performance by anomaly type",
+        )
+
+        st.plotly_chart(
+            figure,
+            width="stretch",
+        )
+    else:
+        st.info(
+            "Run python -m scripts.benchmark_suite "
+            "to generate benchmark results."
+        )

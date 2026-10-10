@@ -1,0 +1,26 @@
+[
+  {
+    "algorithm": "Isolation Forest",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "detected_anomalies": 20,
+    "runtime_ms": 154.73179100081325
+  },
+  {
+    "algorithm": "Local Outlier Factor",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1_score": 0.0,
+    "detected_anomalies": 20,
+    "runtime_ms": 4.3703330447897315
+  },
+  {
+    "algorithm": "One-Class SVM",
+    "precision": 0.5263157894736842,
+    "recall": 0.5,
+    "f1_score": 0.5128205128205128,
+    "detected_anomalies": 19,
+    "runtime_ms": 3.3424580469727516
+  }
+]
