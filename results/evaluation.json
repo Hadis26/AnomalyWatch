@@ -1,0 +1,12 @@
+{
+  "observations": 500,
+  "true_anomalies": 20,
+  "detected_anomalies": 20,
+  "true_positives": 20,
+  "false_positives": 0,
+  "false_negatives": 0,
+  "true_negatives": 480,
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1_score": 1.0
+}

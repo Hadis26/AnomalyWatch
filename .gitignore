@@ -1,0 +1,45 @@
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+
+# Build and packaging
+build/
+dist/
+*.egg-info/
+
+# IDE and operating system
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Streamlit local configuration
+.streamlit/secrets.toml
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+.ipynb_checkpoints/
